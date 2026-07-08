@@ -1,7 +1,9 @@
 package com.nev.user_service.entity;
 
+import jakarta.annotation.Resource;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +24,5 @@ public class User {
     private boolean alerting;
     @Column(name = "energy_alerting_threshold")
     private double energyAlertingThreshold;
+
 }

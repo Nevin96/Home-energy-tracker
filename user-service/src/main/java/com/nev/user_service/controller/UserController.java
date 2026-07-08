@@ -1,5 +1,7 @@
 package com.nev.user_service.controller;
 
+import com.nev.user_service.dto.UserDto;
+import com.nev.user_service.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,8 +17,8 @@ public class UserController {
         this.userService = userService;
     }
     @PostMapping
-    public ResponseEntity<UserDto> CreateUser(@RequestBody UserDto userDto){
-        Userdto created = userService.creatUser(userDto);
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
+        UserDto created = userService.createUser(userDto);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 }

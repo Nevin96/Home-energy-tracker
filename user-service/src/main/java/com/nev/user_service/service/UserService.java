@@ -16,7 +16,6 @@ public class UserService {
     }
 
     public void updateUser(Long id, UserDto dto) {
-        log.info("Updating user info with id : {}",id);
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User Not Found!"));
         user.setName(dto.getName());
@@ -30,7 +29,6 @@ public class UserService {
     }
 
     public UserDto createUser(UserDto input) {
-        log.info("creating user: {}",input);
         final User createdUser = User.builder()
                 .name(input.getName())
                 .surname(input.getSurname())
@@ -56,14 +54,12 @@ public class UserService {
     }
 
     public UserDto getUserById(Long id) {
-        log.info("getting user by id: {}",id);
         return userRepository.findById(id)
                 .map(this::toDto)
                 .orElse(null);
     }
 
     public void deleteUser(Long id) {
-        log.info("deleting user: {}",id);
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User Not Found"));
         userRepository.delete(user);

@@ -15,6 +15,20 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public void updateUser(Long id, UserDto dto) {
+        log.info("Updating user info with id : {}",id);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("User Not Found!"));
+        user.setName(dto.getName());
+        user.setSurname(dto.getSurname());
+        user.setEmail(dto.getEmail());
+        user.setAddress(dto.getAddress());
+        user.setAlerting(dto.isAlerting());
+        user.setEnergyAlertingThreshold(dto.getEnergyAlertingThreshold());
+
+        userRepository.save(user);
+    }
+
     public UserDto createUser(UserDto input) {
         log.info("creating user: {}",input);
         final User createdUser = User.builder()
@@ -39,5 +53,19 @@ public class UserService {
                 .alerting(user.isAlerting())
                 .energyAlertingThreshold(user.getEnergyAlertingThreshold())
                 .build();
+    }
+
+    public UserDto getUserById(Long id) {
+        log.info("getting user by id: {}",id);
+        return userRepository.findById(id)
+                .map(this::toDto)
+                .orElse(null);
+    }
+
+    public void deleteUser(Long id) {
+        log.info("deleting user: {}",id);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("User Not Found"));
+        userRepository.delete(user);
     }
 }

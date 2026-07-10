@@ -2,6 +2,7 @@ package com.nev.device_service.controller;
 
 import com.nev.device_service.dto.DeviceDto;
 import com.nev.device_service.service.DeviceService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,10 +23,19 @@ public class DeviceController {
         DeviceDto createdDevice = deviceService.createDevice(deviceDto);
         return ResponseEntity.ok(createdDevice);
     }
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<DeviceDto> updateDevice(@PathVariable Long id,
                                                   @RequestBody DeviceDto deviceDto){
         DeviceDto updatedDevice = deviceService.updateDevice(id,deviceDto);
         return ResponseEntity.ok(updatedDevice);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDevice(@PathVariable Long id){
+        try {
+            deviceService.deleteDevice(id);
+            return ResponseEntity.noContent().build();
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.noContent().build();
+        }
     }
 }

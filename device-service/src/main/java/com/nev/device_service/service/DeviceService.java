@@ -46,4 +46,10 @@ public class DeviceService {
         final Device updatedDevice = deviceRepository.save(existing);
         return maptoDto(updatedDevice);
     }
+
+    public void deleteDevice(Long id) {
+        Device device = deviceRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Device not Found!"));
+        deviceRepository.delete(device);
+    }
 }

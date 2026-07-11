@@ -2,6 +2,7 @@ package com.nev.device_service.service;
 
 import com.nev.device_service.dto.DeviceDto;
 import com.nev.device_service.entity.Device;
+import com.nev.device_service.exception.DeviceNotFound;
 import com.nev.device_service.repository.DeviceRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ public class DeviceService {
     }
     public DeviceDto getDeviceById(Long id){
         Device device = deviceRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Device not found!"));
+                .orElseThrow(() -> new DeviceNotFound("Device not found!"));
         return maptoDto(device);
     }
     private DeviceDto maptoDto(Device device){
@@ -31,13 +32,14 @@ public class DeviceService {
         device.setName(input.getName());
         device.setLocation(input.getLocation());
         device.setType(input.getType());
+        device.setUser_id(input.getUserId());
         final Device savedDevice = deviceRepository.save(device);
         return maptoDto(savedDevice);
     }
 
     public DeviceDto updateDevice(Long id, DeviceDto input) {
         Device existing = deviceRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Device not Found!"));
+                .orElseThrow(() -> new DeviceNotFound("Device not Found!"));
         existing.setName(input.getName());
         existing.setType(input.getType());
         existing.setLocation(input.getLocation());
@@ -49,7 +51,7 @@ public class DeviceService {
 
     public void deleteDevice(Long id) {
         Device device = deviceRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Device not Found!"));
+                .orElseThrow(() -> new DeviceNotFound("Device not Found!"));
         deviceRepository.delete(device);
     }
 }

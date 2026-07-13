@@ -31,11 +31,7 @@ public class DeviceController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDevice(@PathVariable Long id){
-        try {
-            deviceService.deleteDevice(id);
-            return ResponseEntity.noContent().build();
-        }catch (IllegalArgumentException e){
-            return ResponseEntity.noContent().build();
-        }
+        deviceService.deleteDevice(id);
+        return ResponseEntity.noContent().build();
     }
 }

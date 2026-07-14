@@ -19,6 +19,7 @@ services:
     ports:
       - "9092:9092"
       - "9094:9094"
+    restart: unless-stopped
     environment:
       KAFKA_NODE_ID: 1
       # Unique Kafka cluster identifier (required for KRaft mode)

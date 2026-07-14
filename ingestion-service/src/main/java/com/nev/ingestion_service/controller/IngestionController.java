@@ -1,6 +1,7 @@
 package com.nev.ingestion_service.controller;
 
 import com.nev.ingestion_service.dto.EnergyUsageDto;
+import com.nev.ingestion_service.service.IngestionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

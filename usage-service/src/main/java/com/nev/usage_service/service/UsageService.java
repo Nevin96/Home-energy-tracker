@@ -1,17 +1,23 @@
 package com.nev.usage_service.service;
 
 import com.influxdb.client.InfluxDBClient;
+import com.influxdb.client.QueryApi;
 import com.influxdb.client.domain.WritePrecision;
 import com.influxdb.client.write.Point;
+import com.influxdb.query.FluxTable;
 import com.nev.kafka.event.EnergyUsageEvent;
 
+import com.nev.usage_service.model.DeviceEnergy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -53,5 +59,10 @@ public class UsageService {
           |> group(columns: ["deviceId"])
           |> sum(column: "_value")
         """,influxBucket, oneHourAgo.toString(),now);
+        QueryApi queryApi = influxDBClient.getQueryApi();
+        List<FluxTable> tables = queryApi.query(fluxQuery,influxOrg);
+
+        List<DeviceEnergy> deviceEnergies= new ArrayList<>();
     }
+
 }

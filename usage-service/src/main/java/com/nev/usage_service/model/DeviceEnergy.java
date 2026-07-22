@@ -1,9 +1,16 @@
 package com.nev.usage_service.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Builder
-public record DeviceEnergy(
-        Long deviceId,
-        double energyConsumed,
-        Long userId) {}
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+public class DeviceEnergy {
+    private Long deviceId;
+    private double energyConsumed;
+    private Long userId;
+}

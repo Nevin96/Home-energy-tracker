@@ -17,6 +17,7 @@ import com.nev.usage_service.model.DeviceEnergy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,7 @@ public class UsageService {
     private InfluxDBClient influxDBClient;
     private DeviceClient deviceClient;
     private UserClient userClient;
+    private KafkaTemplate<String ,AlertingEvent> kafkaTemplate;
 
 
     @Value("${influx.bucket}")
@@ -45,10 +47,12 @@ public class UsageService {
 
     public UsageService(InfluxDBClient influxDBClient,
                         DeviceClient deviceClient,
-                        UserClient userClient){
+                        UserClient userClient,
+                        KafkaTemplate<String,AlertingEvent> kafkaTemplate){
         this.influxDBClient = influxDBClient;
         this.deviceClient = deviceClient;
         this.userClient = userClient;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
 
@@ -149,6 +153,7 @@ public class UsageService {
                         .energyConsumed(totalConsumption)
                         .email(userEmailMap.get(userId))
                         .build();
+                kafkaTemplate.send("energy-alerts",alertingEvent);
             }
         }
     }

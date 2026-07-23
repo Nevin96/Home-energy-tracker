@@ -1,0 +1,10 @@
+# Build outputs
+**/target/
+
+# IntelliJ
+.idea/
+*.iml
+
+# Docker volumes
+influxdb_data/
+mysql_data/

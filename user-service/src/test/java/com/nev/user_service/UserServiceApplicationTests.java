@@ -18,8 +18,9 @@ class UserServiceApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-	@Disabled
+
 	@Test
+	@Disabled
 	void createUsers(){
 		for(int i = 1; i < NUM_OF_USERS; i++){
 			User user = User.builder()

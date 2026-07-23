@@ -13,6 +13,9 @@ target/
 .springBeans
 .sts4-cache
 
+influxdb_data/
+mysql_data/
+
 ### IntelliJ IDEA ###
 .idea
 *.iws

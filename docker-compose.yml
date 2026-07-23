@@ -104,6 +104,7 @@ services:
       - DOCKER_INFLUXDB_INIT_BUCKET=usage-bucket
       - DOCKER_INFLUXDB_INIT_RETENTION=1w
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-token
+    restart: unless-stopped
     volumes:
       - ./influxdb_data:/var/lib/influxdb2
 

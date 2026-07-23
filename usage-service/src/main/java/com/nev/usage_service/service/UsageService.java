@@ -58,7 +58,7 @@ public class UsageService {
 
     @KafkaListener(topics = "energy-usage",groupId = "usage-service")
     public void energyUsageEvent(EnergyUsageEvent energyUsageEvent){
-        log.info("Received energy used event: {}",energyUsageEvent);
+//        log.info("Received energy used event: {}",energyUsageEvent);
         Point point = Point.measurement("energy-usage")
                 .addTag("deviceId",String.valueOf(energyUsageEvent.deviceId()))
                 .addField("energyConsumed",energyUsageEvent.energyConsumed())
@@ -106,7 +106,7 @@ public class UsageService {
                 log.warn("Device not found with id: {}",deviceEnergy.getDeviceId());
                 continue;
             }
-            deviceEnergy.setUserId(deviceEnergy.getUserId());
+            deviceEnergy.setUserId(deviceResponse.userId());
         }
         deviceEnergies.removeIf(de -> de.getUserId() == null);
         Map<Long,List<DeviceEnergy>> userDeviceEnergyMap=

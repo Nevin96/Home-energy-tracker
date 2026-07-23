@@ -20,8 +20,9 @@ class DeviceServiceApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-	@Disabled
+
 	@Test
+	@Disabled
 	void createDevices(){
 		for(int i = 1; i < NUM_OF_DEVICES; i++){
 			var device = Device.builder()

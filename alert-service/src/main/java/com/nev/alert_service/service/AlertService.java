@@ -8,8 +8,24 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class AlertService {
+
+    private final EmailService emailService;
+    public AlertService(EmailService emailService){
+        this.emailService = emailService;
+    }
+
     @KafkaListener(topics = "energy-alerts",groupId = "alert-service")
     public void energyUsageAlertEvent(AlertingEvent alertingEvent){
         log.info("Received alert event: {}",alertingEvent);
+
+        final String subject = "Energy usage alert for user "
+                + alertingEvent.getUserId();
+        final String message = "Alert: " + alertingEvent.getMessage()+
+                "\nThreshold: " + alertingEvent.getThreshold() +
+                "\nEnergyConsumed: " + alertingEvent.getEnergyConsumed();
+        emailService.sendEmail(alertingEvent.getEmail(),
+                subject,
+                message,
+                alertingEvent.getUserId());
     }
 }

@@ -1,5 +1,7 @@
 package com.nev.insight_service.controller;
 
+import com.nev.insight_service.dto.InsightDto;
+import com.nev.insight_service.service.InsightService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

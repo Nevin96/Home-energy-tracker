@@ -1,6 +1,8 @@
 package com.nev.insight_service.service;
 
+import com.nev.insight_service.client.UsageClient;
 import com.nev.insight_service.dto.InsightDto;
+import com.nev.insight_service.dto.UsageDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

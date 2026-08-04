@@ -8,4 +8,4 @@ public record DeviceDto(
         String name,
         String type,
         String location,
-        double energyConsumed) {}
+        Double energyConsumed) {}

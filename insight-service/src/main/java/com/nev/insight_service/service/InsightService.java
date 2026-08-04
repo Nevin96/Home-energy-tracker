@@ -24,6 +24,11 @@ public class InsightService {
     }
     public InsightDto getOverview(Long userId){
         final UsageDto usageData = usageClient.getXDaysUsageForUser(userId,3);
+        log.info("Usage data received: {}", usageData);
+
+        if (usageData != null) {
+            log.info("Devices: {}", usageData.devices());
+        }
         double totalUsage = usageData.devices().stream()
                 .mapToDouble(DeviceDto::energyConsumed)
                 .sum();
@@ -49,6 +54,27 @@ public class InsightService {
     }
 
     public InsightDto getSavingsTips(Long userId) {
+        final UsageDto usageData = usageClient.getXDaysUsageForUser(userId,3);
+        double totalUsage = usageData.devices().stream()
+                .mapToDouble(DeviceDto::energyConsumed)
+                .sum();
+        log.info("calling Ollama for userid {} with total usage {}",userId,totalUsage);
 
+        String prompt = new StringBuilder()
+                .append("This is my total consumption for past 3 days. ")
+                .append("how can i reduce my energy consumption and how does it compare to other households")
+                .append("total energy used: \n")
+                .append(usageData.devices())
+                .toString();
+
+        ChatResponse response = ollamaChatModel.call(
+                Prompt.builder()
+                        .content(prompt)
+                        .build());
+        return InsightDto.builder()
+                .userId(userId)
+                .tips(response.getResult().getOutput().getText())
+                .energyUsage(totalUsage)
+                .build();
     }
 }

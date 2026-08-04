@@ -23,6 +23,5 @@ public class Device {
     @Column(name = "type")
     private DeviceType type;
     private String location;
-    private Long user_id;
-
+    private Long userId;
 }

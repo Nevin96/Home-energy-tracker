@@ -29,7 +29,7 @@ class DeviceServiceApplicationTests {
 					.name("Device" + i)
 					.type(DeviceType.values()[i % DeviceType.values().length])
 					.location("Location"+((i%3)+1))
-					.user_id((long) ((i% USERS)+1))
+					.userId((long) ((i% USERS)+1))
 					.build();
 			deviceRepository.save(device);
 		}

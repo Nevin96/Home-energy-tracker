@@ -6,6 +6,8 @@ import com.nev.device_service.exception.DeviceNotFound;
 import com.nev.device_service.repository.DeviceRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DeviceService {
     private DeviceRepository deviceRepository;
@@ -23,7 +25,7 @@ public class DeviceService {
         dto.setName(device.getName());
         dto.setType(device.getType());
         dto.setLocation(device.getLocation());
-        dto.setUserId(device.getUser_id());
+        dto.setUserId(device.getUserId());
         return dto;
     }
 
@@ -32,7 +34,7 @@ public class DeviceService {
         device.setName(input.getName());
         device.setLocation(input.getLocation());
         device.setType(input.getType());
-        device.setUser_id(input.getUserId());
+        device.setUserId(input.getUserId());
         final Device savedDevice = deviceRepository.save(device);
         return maptoDto(savedDevice);
     }
@@ -43,7 +45,7 @@ public class DeviceService {
         existing.setName(input.getName());
         existing.setType(input.getType());
         existing.setLocation(input.getLocation());
-        existing.setUser_id(input.getUserId());
+        existing.setUserId(input.getUserId());
 
         final Device updatedDevice = deviceRepository.save(existing);
         return maptoDto(updatedDevice);
@@ -53,5 +55,12 @@ public class DeviceService {
         Device device = deviceRepository.findById(id)
                 .orElseThrow(() -> new DeviceNotFound("Device not Found!"));
         deviceRepository.delete(device);
+    }
+
+    public List<DeviceDto> getAllDevicesByUserId(Long userId){
+        List<Device> devices = deviceRepository.findAllByUserId(userId);
+        return devices.stream()
+                .map(this::maptoDto)
+                .toList();
     }
 }

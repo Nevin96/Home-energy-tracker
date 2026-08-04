@@ -1,4 +1,9 @@
 package com.nev.usage_service.dto;
 
-public record UsageDto() {
-}
+import lombok.Builder;
+
+import java.util.List;
+@Builder
+public record UsageDto(
+        Long userId,
+        List<DeviceDto> devices) {}

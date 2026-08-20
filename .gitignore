@@ -1,3 +1,4 @@
+
 # Build outputs
 **/target/
 
@@ -7,4 +8,6 @@
 
 # Docker volumes
 influxdb_data/
-mysql_data/
+mysql_data/volume-data/
+
+/volume-data/
